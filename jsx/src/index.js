@@ -9,11 +9,11 @@ const App = () => {
 
   return (
     <div>
-      <label className="label" for="name">
+      <label className="label" htmlFor="name">
         Enter name:
       </label>
       <input id="name" type="text" />
-      <button style={style}>{buttonText}</button>
+      <button style={style}>{buttonText.text}</button>
     </div>
   );
 };
