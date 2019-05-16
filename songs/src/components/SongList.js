@@ -2,13 +2,17 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { List, Button } from "semantic-ui-react";
 
+import { selectSong } from "../actions";
+
 class SongList extends Component {
   renderList = () => {
     return this.props.songs.map(song => {
       return (
         <List.Item key={song.title}>
           <List.Content floated="right">
-            <Button primary>Select</Button>
+            <Button primary onClick={() => this.props.selectSong(song)}>
+              Select
+            </Button>
           </List.Content>
           <List.Content>{song.title}</List.Content>
         </List.Item>
@@ -27,4 +31,7 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(SongList);
+export default connect(
+  mapStateToProps,
+  { selectSong }
+)(SongList);
