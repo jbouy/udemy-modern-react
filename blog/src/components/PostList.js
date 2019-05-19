@@ -2,12 +2,12 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { List, Icon } from "semantic-ui-react";
 
-import { fetchPosts } from "../actions/index";
+import { fetchPostsAndUsers } from "../actions/index";
 import UserHeader from "./UserHeader";
 
 class PostList extends Component {
   componentDidMount() {
-    this.props.fetchPosts();
+    this.props.fetchPostsAndUsers();
   }
 
   renderList = () => {
@@ -42,5 +42,5 @@ const mapStateToProps = ({ posts }) => {
 
 export default connect(
   mapStateToProps,
-  { fetchPosts }
+  { fetchPostsAndUsers }
 )(PostList);
