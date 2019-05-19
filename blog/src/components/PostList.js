@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { List, Icon } from "semantic-ui-react";
 
 import { fetchPosts } from "../actions/index";
+import UserHeader from "./UserHeader";
 
 class PostList extends Component {
   componentDidMount() {
@@ -19,6 +20,7 @@ class PostList extends Component {
               <h2>{post.title}</h2>
               <p>{post.body}</p>
             </List.Description>
+            <UserHeader userId={post.userId} />
           </List.Content>
         </List.Item>
       );
