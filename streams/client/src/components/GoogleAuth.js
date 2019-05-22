@@ -5,8 +5,6 @@ import { Button, Icon } from "semantic-ui-react";
 import { signIn, signOut } from "../actions";
 
 class GoogleAuth extends Component {
-  state = { isSignedIn: null };
-
   componentDidMount() {
     window.gapi.load("client:auth2", () => {
       window.gapi.client
@@ -17,7 +15,8 @@ class GoogleAuth extends Component {
         })
         .then(() => {
           this.auth = window.gapi.auth2.getAuthInstance();
-          this.setState({ isSignedIn: this.auth.isSignedIn.get() });
+
+          this.onAuthChange(this.auth.isSignedIn.get());
           this.auth.isSignedIn.listen(this.onAuthChange);
         });
     });
@@ -25,7 +24,7 @@ class GoogleAuth extends Component {
 
   onAuthChange = isSignedIn => {
     if (isSignedIn) {
-      this.props.signIn();
+      this.props.signIn(this.auth.currentUser.get().getId());
     } else {
       this.props.signOut();
     }
@@ -40,11 +39,13 @@ class GoogleAuth extends Component {
   };
 
   renderAuthButton = () => {
-    if (this.state.isSignedIn === null) {
+    const { isSignedIn } = this.props;
+
+    if (isSignedIn === null) {
       return null;
     }
 
-    if (this.state.isSignedIn) {
+    if (isSignedIn) {
       return (
         <Button color="google plus" onClick={this.onSignOutClick}>
           <Icon name="google" />
@@ -66,7 +67,11 @@ class GoogleAuth extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  return { isSignedIn: state.auth.isSignedIn };
+};
+
 export default connect(
-  null,
+  mapStateToProps,
   { signIn, signOut }
 )(GoogleAuth);
