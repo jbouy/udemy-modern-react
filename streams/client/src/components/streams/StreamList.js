@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import { List, Header, Button } from "semantic-ui-react";
 
 import { fetchStreams } from "../../actions";
@@ -13,7 +14,9 @@ class StreamList extends Component {
     if (stream.userId === this.props.currentUserId) {
       return (
         <List.Content floated="right">
-          <Button primary>Edit</Button>
+          <Button primary as={Link} to={`/streams/edit/${stream.id}`}>
+            Edit
+          </Button>
           <Button negative>Delete</Button>
         </List.Content>
       );
@@ -35,11 +38,24 @@ class StreamList extends Component {
     });
   };
 
+  renderCreate = () => {
+    if (this.props.isSignedIn) {
+      return (
+        <div style={{ textAlign: "right" }}>
+          <Button as={Link} primary to="/streams/new">
+            Create Stream
+          </Button>
+        </div>
+      );
+    }
+  };
+
   render() {
     return (
       <div>
         <Header as="h2">Streams</Header>
         <List celled>{this.renderList()}</List>
+        {this.renderCreate()}
       </div>
     );
   }
@@ -48,7 +64,8 @@ class StreamList extends Component {
 const mapStateToProps = ({ streams, auth }) => {
   return {
     streams: Object.values(streams),
-    currentUserId: auth.userId
+    currentUserId: auth.userId,
+    isSignedIn: auth.isSignedIn
   };
 };
 
