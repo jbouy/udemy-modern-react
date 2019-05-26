@@ -17,7 +17,9 @@ class StreamList extends Component {
           <Button primary as={Link} to={`/streams/edit/${stream.id}`}>
             Edit
           </Button>
-          <Button negative>Delete</Button>
+          <Button negative as={Link} to={`/streams/delete/${stream.id}`}>
+            Delete
+          </Button>
         </List.Content>
       );
     }
