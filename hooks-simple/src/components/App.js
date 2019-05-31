@@ -1,9 +1,21 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
+import { Button } from "semantic-ui-react";
 
-export class App extends Component {
-  render() {
-    return <div>App</div>;
-  }
-}
+import ResourceList from "./ResourceList";
+
+export const App = () => {
+  const [resource, setResource] = useState("posts");
+
+  return (
+    <div>
+      <div>
+        <Button onClick={() => setResource("posts")}>Posts</Button>
+        <Button onClick={() => setResource("todos")}>Todos</Button>
+      </div>
+
+      <ResourceList resource={resource} />
+    </div>
+  );
+};
 
 export default App;
