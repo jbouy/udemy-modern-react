@@ -12,7 +12,7 @@ export class Button extends Component {
   renderButton = color => (
     <SemBtn color={color}>
       <LanguageContext.Consumer>
-        {language => this.renderSubmit(language)}
+        {({ language }) => this.renderSubmit(language)}
       </LanguageContext.Consumer>
     </SemBtn>
   );

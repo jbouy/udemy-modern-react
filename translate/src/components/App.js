@@ -1,31 +1,22 @@
 import React, { Component } from "react";
-import { Container, Flag } from "semantic-ui-react";
+import { Container } from "semantic-ui-react";
 
 import UserCreate from "./UserCreate";
-import LanguageContext from "../contexts/LanguageContext";
+import { LanguageStore } from "../contexts/LanguageContext";
 import ColorContext from "../contexts/ColorContext";
+import LanguageSelector from "./LanguageSelector";
 
 export class App extends Component {
-  state = { language: "english" };
-
-  onLanguageChange = language => {
-    this.setState({ language });
-  };
-
   render() {
     return (
       <Container>
-        <div>
-          Select a language:
-          <Flag name="us" onClick={() => this.onLanguageChange("english")} />
-          <Flag name="nl" onClick={() => this.onLanguageChange("dutch")} />
-        </div>
+        <LanguageStore>
+          <LanguageSelector />
 
-        <LanguageContext.Provider value={this.state.language}>
           <ColorContext.Provider value="red">
             <UserCreate />
           </ColorContext.Provider>
-        </LanguageContext.Provider>
+        </LanguageStore>
       </Container>
     );
   }

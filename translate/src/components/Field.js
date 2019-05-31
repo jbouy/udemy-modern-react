@@ -7,7 +7,7 @@ export class Field extends Component {
   static contextType = LanguageContext;
 
   render() {
-    const text = this.context === "english" ? "Name" : "Naam";
+    const text = this.context.language === "english" ? "Name" : "Naam";
 
     return (
       <Form.Field>
