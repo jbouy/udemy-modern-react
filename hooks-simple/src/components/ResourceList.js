@@ -1,22 +1,33 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { List } from "semantic-ui-react";
 
-export class ResourceList extends Component {
-  state = {
-    resources: []
-  };
+const useResources = resource => {
+  const [resources, setResources] = useState(["posts"]);
 
-  async componentDidMount() {
-    const response = await axios.get(
-      `https://jsonplaceholder.typicode.com/${this.props.resource}`
-    );
+  useEffect(() => {
+    (async resource => {
+      const response = await axios.get(
+        `https://jsonplaceholder.typicode.com/${resource}`
+      );
 
-    this.setState({ resources: response.data });
-  }
+      setResources(response.data);
+    })(resource);
+  }, [resource]);
 
-  render() {
-    return <div>{this.state.resources.length}</div>;
-  }
-}
+  return resources;
+};
+
+const ResourceList = ({ resource }) => {
+  const resources = useResources(resource);
+
+  return (
+    <List>
+      {resources.map(({ title }, index) => (
+        <List.Item key={index}>{title}</List.Item>
+      ))}
+    </List>
+  );
+};
 
 export default ResourceList;
